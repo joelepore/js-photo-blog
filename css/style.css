@@ -20,7 +20,9 @@ main {
 }
 
 header {
-  background-color: var(--color-bg-header);
+  background-image: url('../img/wall.png');
+  background-size: 30%;
+  background-repeat: repeat;
   text-align: center;
   padding: 1rem 0;
 }
