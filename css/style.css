@@ -65,6 +65,10 @@ main {
 .card .text {
   padding-top: 0.3rem;
   min-height: 50px;
+  max-height: 50px;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card::after {
