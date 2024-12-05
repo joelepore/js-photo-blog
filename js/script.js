@@ -43,4 +43,7 @@ function addEventListenerToCards() {
 // Funzione che gestisce il click delle card
 function handleClickCard(e) {
   overlay.classList.remove('d-none');
+
+  const imgSrc = e.currentTarget.querySelector('img').src
+  document.querySelector('.overlay img').src = imgSrc;
 }
