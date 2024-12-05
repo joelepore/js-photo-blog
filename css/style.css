@@ -44,6 +44,10 @@ main {
 }
 
 /* components */
+button {
+  padding: 0.3rem 1rem;
+  font-size: 1.2rem;
+}
 
 .container {
   padding-inline: 6.5rem;
@@ -54,6 +58,7 @@ main {
   background-color: white;
   margin-bottom: 1.5rem;
   position: relative;
+  box-shadow: 0px 7px 7px 0px #0000006c;
 }
 
 .card img {
@@ -85,6 +90,25 @@ main {
   background: rgb(111, 22, 13);
   background: linear-gradient(180deg, rgba(111, 22, 13, 1) 0%, rgba(230, 92, 80, 1) 100%);
   box-shadow: 0.2px 2px 5px -1px #000000;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.747);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.overlay img {
+  max-width: 80%;
 }
 
 /* media queries */
