@@ -1,10 +1,15 @@
-const endpoint = `https://jsonplaceholder.typicode.com/photos?_limit=6`
+const endpoint = `https://jsonplaceholder.typicode.com/photos?_limit=204`
 
 const cardWrapper = document.getElementById('card-wrapper');
 const overlay = document.querySelector('.overlay');
 const btnChiudiOverlay = document.querySelector('.overlay button');
 
+let photos = [];
+let currentPage = 0;
+
 btnChiudiOverlay.addEventListener('click', () => overlay.classList.add('d-none'));
+
+window.addEventListener('scroll', handleInfiniteScroll)
 
 getAndPrintCards(endpoint);
 
@@ -12,8 +17,8 @@ getAndPrintCards(endpoint);
 function getAndPrintCards(endpoint) {
   axios.get(endpoint)
     .then(res => {
-      const photos = res.data.map(({ title, url }) => { return { title, url } })
-      photos.forEach(photo => cardWrapper.innerHTML += getCardTemplate(photo.title, photo.url));
+      photos = res.data.map(({ title, url }) => { return { title, url } })
+      printCards(currentPage);
       addEventListenerToCards();
     })
     .catch(err => console.log(err));
@@ -46,4 +51,19 @@ function handleClickCard(e) {
 
   const imgSrc = e.currentTarget.querySelector('img').src
   document.querySelector('.overlay img').src = imgSrc;
+}
+function printCards(page) {
+  const start = 6 * page;
+  const end = start + 6;
+
+  for (let i = start; i < end; i++) {
+    const { title, url } = photos[i];
+    cardWrapper.innerHTML += getCardTemplate(title, url);
+  }
+}
+function handleInfiniteScroll() {
+  const end = window.innerHeight + window.scrollY >= document.body.offsetHeight;
+  if (end) {
+    printCards(++currentPage);
+  }
 }
