@@ -20,6 +20,7 @@ function getAndPrintCards(endpoint) {
   axios.get(endpoint)
     .then(res => {
       photos = res.data.map(({ title, url }) => { return { title, url } })
+      printCards(currentPage++, photosPerPage);
       printCards(currentPage, photosPerPage);
       addEventListenerToCards();
     })
@@ -70,7 +71,8 @@ function printCards(page, photosPerPage) {
 // Funzione che rileva il punto di scroll a cui sono, incrementa la pagina e stampa le card
 function handleInfiniteScroll() {
   const end = window.innerHeight + window.scrollY >= document.body.offsetHeight;
-  if (end) {
+  if (end && currentPage * photosPerPage + photosPerPage < numPhotos) {
+    console.log(currentPage * photosPerPage + photosPerPage);
     printCards(++currentPage, photosPerPage);
     addEventListenerToCards();
   }
