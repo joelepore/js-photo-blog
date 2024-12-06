@@ -3,6 +3,7 @@ let currentPage = 0;
 const photosPerPage = 6;
 const numPhotos = 204;
 const endpoint = `https://jsonplaceholder.typicode.com/photos?_limit=${numPhotos}`
+const errorImg = `https://archive.org/download/placeholder-image/placeholder-image.jpg`;
 
 const cardWrapper = document.getElementById('card-wrapper');
 const overlay = document.querySelector('.overlay');
@@ -36,8 +37,7 @@ function getCardTemplate(title, img) {
               <img 
                 src="${img}" 
                 alt="${title}" 
-                onerror="this.src='https://archive.org/download/placeholder-image/placeholder-image.jpg';"
-                loading="lazy"
+                onerror="this.src='${errorImg}';"
                 onload="onImageLoad(this)" 
                 >
             </div>
