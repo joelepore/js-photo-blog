@@ -20,6 +20,7 @@ function getAndPrintCards(endpoint) {
   axios.get(endpoint)
     .then(res => {
       photos = res.data.map(({ title, url }) => { return { title, url } })
+      // Chiamo due volte print cards per forzare lo scroll
       printCards(currentPage++, photosPerPage);
       printCards(currentPage, photosPerPage);
       addEventListenerToCards();
@@ -30,12 +31,15 @@ function getAndPrintCards(endpoint) {
 function getCardTemplate(title, img) {
   return `
         <div class="col">
-          <div class="card">
+          <div class="card lazy-load">
             <div class="img-wrapper">
               <img 
                 src="${img}" 
                 alt="${title}" 
-                onerror="this.src='https://archive.org/download/placeholder-image/placeholder-image.jpg';">
+                onerror="this.src='https://archive.org/download/placeholder-image/placeholder-image.jpg';"
+                loading="lazy"
+                onload="onImageLoad(this)" 
+                >
             </div>
             <div class="text">
               <p>${title}</p>
@@ -72,8 +76,10 @@ function printCards(page, photosPerPage) {
 function handleInfiniteScroll() {
   const end = window.innerHeight + window.scrollY >= document.body.offsetHeight;
   if (end && currentPage * photosPerPage + photosPerPage < numPhotos) {
-    console.log(currentPage * photosPerPage + photosPerPage);
     printCards(++currentPage, photosPerPage);
     addEventListenerToCards();
   }
+}
+function onImageLoad(img) {
+  img.parentNode.parentNode.classList.remove('lazy-load');
 }
