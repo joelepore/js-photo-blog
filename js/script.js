@@ -29,10 +29,10 @@ function getAndPrintCards(endpoint) {
     .catch(err => console.log(err));
 }
 // Funzione che restituisce la stringa di template di una card passando titolo e url dell'immagine
-function getCardTemplate(title, img) {
+function getCardTemplate(title, img, index) {
   return `
         <div class="col">
-          <div class="card lazy-load">
+          <div class="card lazy-load" data-id=${index}>
             <div class="img-wrapper">
               <img 
                 src="${img}" 
@@ -59,8 +59,8 @@ function addEventListenerToCards() {
 function handleClickCard(e) {
   overlay.classList.remove('d-none');
 
-  const imgSrc = e.currentTarget.querySelector('img').src
-  document.querySelector('.overlay img').src = imgSrc;
+  const index = parseInt(e.currentTarget.dataset.id);
+  document.querySelector('.overlay img').src = photos[index].url;
 }
 // Funzione che, data la pagina corrente, stampa le card
 function printCards(page, photosPerPage) {
@@ -69,7 +69,7 @@ function printCards(page, photosPerPage) {
 
   for (let i = start; i < end; i++) {
     const { title, url } = photos[i];
-    cardWrapper.innerHTML += getCardTemplate(title, url);
+    cardWrapper.innerHTML += getCardTemplate(title, url, i);
   }
 }
 // Funzione che rileva il punto di scroll a cui sono, incrementa la pagina e stampa le card
